@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Windows.h"
-
 class WinTP
 {
 public:
@@ -17,6 +15,9 @@ public:
 
 	// Implement your own if required
 	virtual PTP_CLEANUP_GROUP_CANCEL_CALLBACK CleanupCallback();
+
+	template<typename T>
+	bool SetCallback(T func, void* params);
 
 private:
 

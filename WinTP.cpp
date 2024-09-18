@@ -1,4 +1,6 @@
+#include "Windows.h"
 #include "WinTP.h"
+#include "WinTPItem.h"
 
 WinTP::WinTP() : pPool(nullptr), pWorkCallback(nullptr), pWork(nullptr), pCleanupGroup(nullptr)
 {
@@ -35,6 +37,21 @@ PTP_CLEANUP_GROUP_CANCEL_CALLBACK WinTP::CleanupCallback()
 {
 	// std::cout << "Cleanup callback called!" << std::endl;
 	return PTP_CLEANUP_GROUP_CANCEL_CALLBACK();
+}
+
+template<typename T>
+bool WinTP::SetCallback(T func, void* params)
+{
+	WinTPItem<T>* item = new WinTPItem<T>(func, params, &callbackEnv);
+	if (!item) {
+		// std::cout<<"Some error"<<std::endl;
+		return false;
+	}
+	if (!item->StartWork()) {
+		// std::cout<<"Some error"<<std::endl;
+		return false;
+	}
+	return true;
 }
 
 void WinTP::WaitCallbackEnd(bool bForceTerminate)

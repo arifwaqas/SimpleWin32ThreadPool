@@ -32,5 +32,8 @@
     <ClInclude Include="WinTPItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleWinTPWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

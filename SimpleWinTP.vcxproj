@@ -133,6 +133,7 @@
     <ClCompile Include="WinTPItem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SimpleWinTPWrapper.h" />
     <ClInclude Include="WinTP.h" />
     <ClInclude Include="WinTPItem.h" />
   </ItemGroup>

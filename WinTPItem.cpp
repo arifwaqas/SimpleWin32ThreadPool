@@ -31,6 +31,7 @@ void CALLBACK WinTPItem<T>::Callback(PTP_CALLBACK_INSTANCE pInstance, PVOID pFun
 	WinTPItem<T>* item = reinterpret_cast<WinTPItem<T>*>(pFuncId);
 	if (!item)
 	{
+		//std::cout<<"Error allocating memory"<<std::endl;
 		return;
 	}
 
