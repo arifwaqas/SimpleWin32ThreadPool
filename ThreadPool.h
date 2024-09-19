@@ -1,10 +1,12 @@
 #pragma once
+#include "Windows.h"
+#include "ThreadPoolItem.h"
 
-class WinTP
+class ThreadPool
 {
 public:
-	WinTP();
-	~WinTP();
+	ThreadPool();
+	~ThreadPool();
 
 	bool Init();
 

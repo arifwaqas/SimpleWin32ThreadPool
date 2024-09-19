@@ -5,8 +5,8 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include "WinTP.h"
-#include "WinTPItem.h"
+#include "ThreadPool.h"
+#include "ThreadPoolItem.h"
 
 VOID CALLBACK ThreadProc(PTP_CALLBACK_INSTANCE instance, PVOID params, PTP_WORK work)
 {
@@ -28,7 +28,7 @@ VOID CALLBACK ThreadProc(PTP_CALLBACK_INSTANCE instance, PVOID params, PTP_WORK 
 int main()
 {
 	//Init ThreadPoolWrapper
-	WinTP wrapper;
+	ThreadPool wrapper;
 	wrapper.Init();
 
 	//Set Min/Max Thread Count
@@ -37,12 +37,12 @@ int main()
 
 	//put callback with pram into the Threadpool
 	std::vector<int> parameters = { 2, 4, 6, 7 };
-	std::for_each(parameters.begin(), parameters.end(), [&wrapper](int p) {
-		wrapper.SetCallback(ThreadProc, static_cast<PVOID>(&p));
+	std::for_each(parameters.begin(), parameters.end(), [&wrapper](int& p) {
+		//wrapper.SetCallback(ThreadProc, (void*)&p);
 	});
 
 	//Wait for Callback finish
 	wrapper.WaitCallbackEnd( false );
 
-	getchar();
+	return 1;
 }

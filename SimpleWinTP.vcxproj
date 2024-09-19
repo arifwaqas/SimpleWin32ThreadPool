@@ -129,13 +129,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SimpleWinTPWrapper.cpp" />
-    <ClCompile Include="WinTP.cpp" />
-    <ClCompile Include="WinTPItem.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="ThreadPoolItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleWinTPWrapper.h" />
-    <ClInclude Include="WinTP.h" />
-    <ClInclude Include="WinTPItem.h" />
+    <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="ThreadPoolItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

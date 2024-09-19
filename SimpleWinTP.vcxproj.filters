@@ -18,18 +18,18 @@
     <ClCompile Include="SimpleWinTPWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinTP.cpp">
+    <ClCompile Include="ThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinTPItem.cpp">
+    <ClCompile Include="ThreadPoolItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WinTP.h">
+    <ClInclude Include="ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinTPItem.h">
+    <ClInclude Include="ThreadPoolItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimpleWinTPWrapper.h">

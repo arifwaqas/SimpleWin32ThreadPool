@@ -1,7 +1,7 @@
-#include "WinTPItem.h"
+#include "ThreadPoolItem.h"
 
 template <typename T>
-WinTPItem<T>::WinTPItem(const T worker, PVOID pParam, const PTP_CALLBACK_ENVIRON pCallbackEnv)
+ThreadPoolItem<T>::ThreadPoolItem(const T worker, PVOID pParam, const PTP_CALLBACK_ENVIRON pCallbackEnv)
 	: worker(worker), pParam(pParam), pCallbackEnv(pCallbackEnv), pWork(nullptr)
 {
 
@@ -9,7 +9,7 @@ WinTPItem<T>::WinTPItem(const T worker, PVOID pParam, const PTP_CALLBACK_ENVIRON
 
 
 template <typename T>
-bool WinTPItem<T>::StartWork()
+bool ThreadPoolItem<T>::StartWork()
 {
 	pWork = CreateThreadpoolWork(Callback, this, pCallbackEnv);
 	if (pWork == nullptr)
@@ -23,12 +23,12 @@ bool WinTPItem<T>::StartWork()
 
 
 template <typename T>
-void CALLBACK WinTPItem<T>::Callback(PTP_CALLBACK_INSTANCE pInstance, PVOID pFuncId, PTP_WORK pWork)
+void CALLBACK ThreadPoolItem<T>::Callback(PTP_CALLBACK_INSTANCE pInstance, PVOID pFuncId, PTP_WORK pWork)
 {
 	UNREFERENCED_PARAMETER(pInstance);
 	UNREFERENCED_PARAMETER(pWork);
 
-	WinTPItem<T>* item = reinterpret_cast<WinTPItem<T>*>(pFuncId);
+	ThreadPoolItem<T>* item = reinterpret_cast<ThreadPoolItem<T>*>(pFuncId);
 	if (!item)
 	{
 		//std::cout<<"Error allocating memory"<<std::endl;

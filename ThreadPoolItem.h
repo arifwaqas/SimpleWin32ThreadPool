@@ -2,10 +2,10 @@
 #include <windows.h>
 
 template <typename T>
-class WinTPItem
+class ThreadPoolItem
 {
 public:
-	WinTPItem(const T func, PVOID param, const PTP_CALLBACK_ENVIRON callback_env);
+	ThreadPoolItem(const T func, PVOID param, const PTP_CALLBACK_ENVIRON callback_env);
 
 	bool StartWork();
 

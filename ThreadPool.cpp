@@ -1,14 +1,12 @@
-#include "Windows.h"
-#include "WinTP.h"
-#include "WinTPItem.h"
+#include "ThreadPool.h"
 
-WinTP::WinTP() : pPool(nullptr), pWorkCallback(nullptr), pWork(nullptr), pCleanupGroup(nullptr)
+ThreadPool::ThreadPool() : pPool(nullptr), pWorkCallback(nullptr), pWork(nullptr), pCleanupGroup(nullptr)
 {
 	// std::cout<<"Initialized"<<std::endl;
 	memset(&callbackEnv, 0, sizeof(TP_CALLBACK_ENVIRON));
 }
 
-WinTP::~WinTP()
+ThreadPool::~ThreadPool()
 {
 	DestroyThreadpoolEnvironment(&callbackEnv);
 
@@ -23,43 +21,28 @@ WinTP::~WinTP()
 	}
 }
 
-void WinTP::SetMaxThreadCount(const DWORD count)
+void ThreadPool::SetMaxThreadCount(const DWORD count)
 {
 	SetThreadpoolThreadMaximum(pPool, count);
 }
 
-void WinTP::SetMinThreadCount(const DWORD count)
+void ThreadPool::SetMinThreadCount(const DWORD count)
 {
 	SetThreadpoolThreadMinimum(pPool, count);
 }
 
-PTP_CLEANUP_GROUP_CANCEL_CALLBACK WinTP::CleanupCallback()
+PTP_CLEANUP_GROUP_CANCEL_CALLBACK ThreadPool::CleanupCallback()
 {
 	// std::cout << "Cleanup callback called!" << std::endl;
 	return PTP_CLEANUP_GROUP_CANCEL_CALLBACK();
 }
 
-template<typename T>
-bool WinTP::SetCallback(T func, void* params)
-{
-	WinTPItem<T>* item = new WinTPItem<T>(func, params, &callbackEnv);
-	if (!item) {
-		// std::cout<<"Some error"<<std::endl;
-		return false;
-	}
-	if (!item->StartWork()) {
-		// std::cout<<"Some error"<<std::endl;
-		return false;
-	}
-	return true;
-}
-
-void WinTP::WaitCallbackEnd(bool bForceTerminate)
+void ThreadPool::WaitCallbackEnd(bool bForceTerminate)
 {
 	CloseThreadpoolCleanupGroupMembers(pCleanupGroup, bForceTerminate, nullptr);
 }
 
-bool WinTP::Init()
+bool ThreadPool::Init()
 {
 	InitializeThreadpoolEnvironment(&callbackEnv);
 
@@ -77,5 +60,22 @@ bool WinTP::Init()
 
 	SetThreadpoolCallbackCleanupGroup(&callbackEnv, pCleanupGroup, nullptr);
 
+	return true;
+}
+
+template<typename T>
+bool ThreadPool::SetCallback(T func, void* params)
+{
+	ThreadPoolItem<T> WorkItem = new ThreadPoolItem<T>(func, params, &callbackEnv);
+
+	if(!WorkItem){
+		// LOG ERROR
+		return false;
+	}
+
+	if (!WorkItem->StartWork()) {
+		// LOG ERROR
+		return false;
+	}
 	return true;
 }
