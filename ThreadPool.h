@@ -29,3 +29,21 @@ private:
 	PTP_WORK pWork;
 	PTP_CLEANUP_GROUP pCleanupGroup;
 };
+
+
+template<typename T>
+inline bool ThreadPool::SetCallback(T func, void* params)
+{
+	ThreadPoolItem<T> WorkItem = new ThreadPoolItem<T>(func, params, &callbackEnv);
+
+	if (!WorkItem) {
+		// LOG ERROR
+		return false;
+	}
+
+	if (!WorkItem->StartWork()) {
+		// LOG ERROR
+		return false;
+	}
+	return true;
+}

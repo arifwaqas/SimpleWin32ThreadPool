@@ -62,20 +62,3 @@ bool ThreadPool::Init()
 
 	return true;
 }
-
-template<typename T>
-bool ThreadPool::SetCallback(T func, void* params)
-{
-	ThreadPoolItem<T> WorkItem = new ThreadPoolItem<T>(func, params, &callbackEnv);
-
-	if(!WorkItem){
-		// LOG ERROR
-		return false;
-	}
-
-	if (!WorkItem->StartWork()) {
-		// LOG ERROR
-		return false;
-	}
-	return true;
-}
